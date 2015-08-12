@@ -11,6 +11,7 @@
 		FA9943A81B79E7D6006B8235 /* SwiftMediaLister.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA99439C1B79E7D6006B8235 /* SwiftMediaLister.framework */; };
 		FA9943AF1B79E7D6006B8235 /* SwiftMediaListerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9943AE1B79E7D6006B8235 /* SwiftMediaListerTests.swift */; };
 		FA9943B91B79E7E2006B8235 /* SwiftMediaLister.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9943B81B79E7E2006B8235 /* SwiftMediaLister.swift */; };
+		FA9943C51B7B58B3006B8235 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA9943C41B7B58B3006B8235 /* MobileCoreServices.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +32,7 @@
 		FA9943AD1B79E7D6006B8235 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA9943AE1B79E7D6006B8235 /* SwiftMediaListerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMediaListerTests.swift; sourceTree = "<group>"; };
 		FA9943B81B79E7E2006B8235 /* SwiftMediaLister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftMediaLister.swift; sourceTree = "<group>"; };
+		FA9943C41B7B58B3006B8235 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA9943C51B7B58B3006B8235 /* MobileCoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,6 +58,7 @@
 		FA9943921B79E7D6006B8235 = {
 			isa = PBXGroup;
 			children = (
+				FA9943C41B7B58B3006B8235 /* MobileCoreServices.framework */,
 				FA99439E1B79E7D6006B8235 /* SwiftMediaLister */,
 				FA9943AB1B79E7D6006B8235 /* SwiftMediaListerTests */,
 				FA99439D1B79E7D6006B8235 /* Products */,
@@ -408,6 +412,7 @@
 				FA9943B41B79E7D6006B8235 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FA9943B51B79E7D6006B8235 /* Build configuration list for PBXNativeTarget "SwiftMediaListerTests" */ = {
 			isa = XCConfigurationList;
@@ -416,6 +421,7 @@
 				FA9943B71B79E7D6006B8235 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

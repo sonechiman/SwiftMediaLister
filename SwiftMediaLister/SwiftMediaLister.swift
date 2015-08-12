@@ -8,16 +8,17 @@
 
 import Foundation
 import AssetsLibrary
+import MobileCoreServices
 
 public class SwiftMediaLister{
     
     let library = ALAssetsLibrary()
     var result:[[String: AnyObject]] = []
     
-    
     public init(){
     }
     
+    // TODO:cordova対応
     public func test(){
         library.enumerateGroupsWithTypes(ALAssetsGroupSavedPhotos,
             usingBlock: {
@@ -41,19 +42,21 @@ public class SwiftMediaLister{
         )
     }
     
+    // TODO: Location等を追加可能
     func setDictionary(asset: ALAsset, id: Int) -> [String: AnyObject]{
         var data: [String: AnyObject] = [:]
         data["id"] = id
-        data["mediaType"] = asset.valueForProperty(ALAssetPropertyType)
-        // TODO: CLLocationから情報をとる
-        data["location"] =  asset.valueForProperty(ALAssetPropertyLocation)
-        data["orientation"] = asset.valueForProperty(ALAssetPropertyOrientation)
-        data["dateAdded"] = asset.valueForProperty(ALAssetPropertyDate)
-        data["represetation"] = asset.valueForProperty(ALAssetPropertyRepresentations)
-        data["paths"] = asset.valueForProperty(ALAssetPropertyURLs)
+        data["mediaType"] = setType(asset)
+        var date: NSDate = asset.valueForProperty(ALAssetPropertyDate) as! NSDate
+        data["dateAdded"] = date.timeIntervalSince1970
         data["path"] = asset.valueForProperty(ALAssetPropertyAssetURL)
         var rep = asset.defaultRepresentation()
         data["size"] = Int(rep.size())
+        data["orientation"] = rep.metadata()["Orientation"]
+        data["title"] = rep.filename()
+        data["height"] = rep.dimensions().height
+        data["wigth"] = rep.dimensions().width
+        data["mimeType"] = UTTypeCopyPreferredTagWithClass(rep.UTI(), kUTTagClassMIMEType).takeUnretainedValue()
         data["thumbnailPath"] = saveThumbnail(asset, id: id)
         return data
     }
@@ -73,5 +76,15 @@ public class SwiftMediaLister{
             println("error occured: Cannot save thumbnail image")
             return ""
         }
+    }
+    
+    func setType(asset:ALAsset) -> String{
+        let type = asset.valueForProperty(ALAssetPropertyType) as! String
+        if type == ALAssetTypePhoto{
+            return "image"
+        } else if type == ALAssetTypeVideo {
+            return "video"
+        }
+        return  ""
     }
 }
