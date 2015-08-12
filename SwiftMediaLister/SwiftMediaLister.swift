@@ -10,6 +10,7 @@ import Foundation
 import AssetsLibrary
 import MobileCoreServices
 
+// TODO: Rewrite in ObjC or Photo
 public class SwiftMediaLister{
     
     let library = ALAssetsLibrary()
@@ -18,21 +19,19 @@ public class SwiftMediaLister{
     
     public init(){}
     
-    public func readLibrary(thumbnail: Bool = true, limit: Int = 20, mediaTypes: [String] = ["image"], offset:Int = 0){
+    public func readLibrary(thumbnail: Bool = true, limit: Int = 20, mediaTypes: [String] = ["image"], offset:Int = 0) -> [[String: AnyObject]]{
         option = ["thumbnail": thumbnail, "limit":limit , "mediaTypes": mediaTypes, "offset": offset]
         loadMedia(option)
+        return result
     }
 
-    
-    
-    // TODO:cordova対応
-    public func loadMedia(option: [String: AnyObject]){
+    private func loadMedia(option: [String: AnyObject]){
         library.enumerateGroupsWithTypes(ALAssetsGroupSavedPhotos,usingBlock: {
             (group: ALAssetsGroup!, stop: UnsafeMutablePointer) in
             if group == nil{
                 return
             }
-            
+
             if let filter = self.getFilter(option["mediaTypes"] as! [String]){
                 group.setAssetsFilter(filter)
             } else {
@@ -60,8 +59,8 @@ public class SwiftMediaLister{
         )
     }
     
-    // TODO: Location等を追加可能
-    func setDictionary(asset: ALAsset, id: Int, option: [String: AnyObject]) -> [String: AnyObject]{
+    // TODO: Add data to Location etc.
+    private func setDictionary(asset: ALAsset, id: Int, option: [String: AnyObject]) -> [String: AnyObject]{
         var data: [String: AnyObject] = [:]
         data["id"] = id
         data["mediaType"] = setType(asset)
@@ -81,7 +80,7 @@ public class SwiftMediaLister{
         return data
     }
     
-    func saveThumbnail(asset: ALAsset, id: Int) -> NSString{
+    private func saveThumbnail(asset: ALAsset, id: Int) -> NSString{
         let thumbnail = asset.thumbnail().takeUnretainedValue()
         let image = UIImage(CGImage: thumbnail)
         let imageData = UIImageJPEGRepresentation(image, 0.8)
@@ -97,7 +96,7 @@ public class SwiftMediaLister{
         }
     }
     
-    func setType(asset:ALAsset) -> String{
+    private func setType(asset:ALAsset) -> String{
         let type = asset.valueForProperty(ALAssetPropertyType) as! String
         if type == ALAssetTypePhoto{
             return "image"
@@ -108,7 +107,7 @@ public class SwiftMediaLister{
     }
     
     // TODO: Add music and playlist and audio
-    func getFilter(mediaTypes: [String]) -> ALAssetsFilter?{
+    private func getFilter(mediaTypes: [String]) -> ALAssetsFilter?{
         if contains(mediaTypes, "image"){
             if contains(mediaTypes, "video"){
                 return ALAssetsFilter.allAssets()
